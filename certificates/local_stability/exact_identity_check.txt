@@ -1,0 +1,18 @@
+PASS  J0(sqrt(6)) even upper sum: -23/1024
+PASS  J1(sqrt(15))/(sqrt(15)/2) even upper sum: -11/16384
+PASS  J0(sqrt(30)) even upper sum: -2898599/205520896
+PASS  Rayleigh tail subtraction: 11/14400
+PASS  Rayleigh tail is strictly below 1/900
+PASS  gradient x angular ratio: 3/4
+PASS  gradient y angular ratio: 1/4
+PASS  Hessian xx angular ratio: 5/8
+PASS  Hessian yy angular ratio: 1/8
+PASS  Hessian xx-yy angular ratio: 1/8
+PASS  ellipse gradient factor: 73/80
+PASS  ellipse Laplacian factor: 541/640
+PASS  ellipse trial polynomial in N: (Fraction(-13, 2560), Fraction(3, 128), Fraction(-13, 2560))
+PASS  negative polynomial shifted at N=5: (Fraction(-13, 1), Fraction(60, 1), Fraction(-13, 1))
+PASS  contrast derivative sign factor: (Fraction(-77, 160), Fraction(73, 160))
+PASS  endpoint F(1): (Fraction(0, 1), Fraction(0, 1), Fraction(0, 1))
+PASS  endpoint F'(1)=(N-1)^2/4: (Fraction(1, 4), Fraction(-1, 2), Fraction(1, 4))
+All finite rational identities passed. No floating-point arithmetic used.

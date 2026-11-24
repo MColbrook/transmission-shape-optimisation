@@ -1,0 +1,17 @@
+{
+  "status": "passed exact rational arithmetic",
+  "rayleigh_sum_j1_power6": "1/3072",
+  "rayleigh_sum_j2_power8": "7/3317760",
+  "dirichlet_comparison_margin": "187/24576",
+  "buckling_comparison_margin": "7433/207360",
+  "angular_plate_lower_bound": "377",
+  "disk_plate_product_lower_bound": "39208",
+  "cutoff_fourth_power": 38416,
+  "product_margin": "792",
+  "imported_analytic_inputs": {
+    "first_disk_plate_lower_bound": 104,
+    "second_radial_dirichlet_lower_bound": 30,
+    "source": "Manuscript Section 4.4 for the first disk plate value and Section 2.1 for the second radial Dirichlet value",
+    "scope": "The checker verifies the consequences of these separately justified bounds."
+  }
+}

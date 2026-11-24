@@ -1,0 +1,210 @@
+{
+  "certificates": [
+    {
+      "id": "robin-denominators",
+      "runtime": "python",
+      "script": "minimizer_literature/continuation/robin_denominators.py",
+      "args": [],
+      "outputs": [
+        "minimizer_literature/continuation/robin_denominators.json"
+      ],
+      "quick": true
+    },
+    {
+      "id": "robin-normalization",
+      "runtime": "python",
+      "script": "global_variational/continuation/robin_normalization_bounds.py",
+      "args": [],
+      "outputs": [
+        "global_variational/continuation/robin_normalization_bounds.json"
+      ],
+      "quick": true
+    },
+    {
+      "id": "analytic-competitor",
+      "runtime": "python",
+      "script": "shape_optimization/certify_near_optimal_domain.py",
+      "args": [],
+      "outputs": [
+        "shape_optimization/near_optimal_domain_certificate.json"
+      ],
+      "quick": true
+    },
+    {
+      "id": "contrast-interval",
+      "runtime": "python",
+      "script": "continuation/certify_contrast_interval.py",
+      "args": [],
+      "outputs": [
+        "continuation/certify_contrast_interval.json"
+      ],
+      "quick": true
+    },
+    {
+      "id": "endpoint-A",
+      "runtime": "python",
+      "script": "shape_optimization/continuation/all_contrast_endpoint.py",
+      "args": [
+        "A"
+      ],
+      "outputs": [
+        "shape_optimization/continuation/all_contrast_endpoint_A_M48.json"
+      ],
+      "after": [
+        "robin-denominators",
+        "robin-normalization"
+      ]
+    },
+    {
+      "id": "endpoints-E-Esmall",
+      "runtime": "python",
+      "script": "shape_optimization/continuation/all_contrast_endpoint_fast.py",
+      "args": [
+        "E",
+        "Esmall"
+      ],
+      "outputs": [
+        "shape_optimization/continuation/all_contrast_endpoint_fast_E.json",
+        "shape_optimization/continuation/all_contrast_endpoint_fast_Esmall.json"
+      ],
+      "after": [
+        "robin-denominators",
+        "robin-normalization"
+      ]
+    },
+    {
+      "id": "endpoint-B",
+      "runtime": "python",
+      "script": "shape_optimization/continuation/all_contrast_endpoint_B_covered.py",
+      "args": [],
+      "outputs": [
+        "shape_optimization/continuation/all_contrast_endpoint_B_covered.json"
+      ],
+      "after": [
+        "endpoints-E-Esmall"
+      ]
+    },
+    {
+      "id": "center",
+      "runtime": "python",
+      "script": "minimizer_literature/continuation/all_contrast_center_reduced.py",
+      "args": [],
+      "outputs": [
+        "minimizer_literature/continuation/all_contrast_center_reduced.json"
+      ],
+      "after": [
+        "robin-denominators",
+        "robin-normalization"
+      ]
+    },
+    {
+      "id": "coverage",
+      "runtime": "python",
+      "script": "continuation/audit_all_contrast_coverage.py",
+      "args": [],
+      "outputs": [
+        "continuation/all_contrast_coverage_audit.json"
+      ],
+      "quick": true,
+      "after": [
+        "endpoint-A",
+        "endpoints-E-Esmall",
+        "endpoint-B",
+        "center"
+      ]
+    },
+    {
+      "id": "local-identities",
+      "runtime": "python",
+      "script": "local_stability/check_exact_identities.py",
+      "args": [],
+      "outputs": [],
+      "compare_stdout": "local_stability/exact_identity_check.txt",
+      "quick": true
+    }
+  ],
+  "subresonant": [
+    {
+      "id": "unit_endpoint",
+      "runtime": "python",
+      "script": "unit_endpoint_check.py",
+      "coverage": "Unit contrast. Two radial roots inside modulus 11, isolated least pair, finite Hessian modes and constants for all higher modes.",
+      "tail": "Degree-30 entire series with geometric tails, local Taylor bounds and an analytic Bessel-product tail.",
+      "outputs": [
+        "unit_endpoint_certificate.json"
+      ],
+      "quick": true
+    },
+    {
+      "id": "extended_roots",
+      "runtime": "python",
+      "script": "unit_midrange/extension/check_roots.py",
+      "coverage": "The whole closed contrast interval [1,441/100].",
+      "tail": "Entire-series tail, two Graeffe transforms and exact parameter coefficient bounds. Exact first-angular sign bounds accompany the analytic higher-angular exclusions.",
+      "outputs": [
+        "unit_midrange/extension/root_certificate.json"
+      ],
+      "quick": true
+    },
+    {
+      "id": "extended_hessian",
+      "runtime": "python",
+      "script": "unit_midrange/extension/check_hessian.py",
+      "coverage": "550 closed root tubes covering sqrt(n) in [1,21/10], modes 2 through 6 and every mode at least 7.",
+      "tail": "Uniform entire-series tails and an analytic infinite-mode Bessel-product estimate.",
+      "outputs": [
+        "unit_midrange/extension/hessian_certificate.json"
+      ]
+    },
+    {
+      "id": "plate_product",
+      "runtime": "python",
+      "script": "global_screen/plate_root_count_check.py",
+      "coverage": "The disk plate product cutoff |mu|<=14, independent of contrast.",
+      "tail": "Exact Rayleigh sums from Newton identities. Root counting and algebraic simplicity use the analytic Gram argument.",
+      "outputs": [
+        "global_screen/plate_root_count_certificate.json"
+      ],
+      "quick": true
+    },
+    {
+      "id": "resonance_constants",
+      "runtime": "python",
+      "script": "unit_midrange/cap/coarse_constants.py",
+      "coverage": "alpha<6, 30<zeta<31 and the subresonant scaled cutoff.",
+      "tail": "Alternating Bessel bounds and analytic zero interlacing. Full branch continuation is analytic.",
+      "outputs": [
+        "unit_midrange/cap/coarse_constants.json"
+      ],
+      "quick": true
+    },
+    {
+      "id": "compact_cones",
+      "runtime": "python",
+      "script": "unit_midrange/cap/hessian_compact_check.py",
+      "coverage": "808 closed tubes from sqrt(n)=21/10 to 459083/200000.",
+      "tail": "Uniform entire-series derivative tails and exact rational cone inequalities. Higher-mode positivity is analytic.",
+      "outputs": [
+        "unit_midrange/cap/hessian_compact_certificate.json"
+      ]
+    },
+    {
+      "id": "endpoint_cones",
+      "runtime": "python",
+      "script": "unit_midrange/cap/hessian_endpoint_check.py",
+      "coverage": "Every eta=(N-n)^(1/3) in [0,1/40]. The value zero is the removable normalisation limit.",
+      "tail": "Degree-12 local Bessel ODE series, exact eta^3 cancellation and a uniform eta^10 determinant tail.",
+      "outputs": [
+        "unit_midrange/cap/hessian_endpoint_certificate.json"
+      ],
+      "quick": true
+    }
+  ],
+  "additional": [
+    {
+      "id": "transition-endpoints",
+      "runtime": "node",
+      "script": "check_transition_endpoints.mjs"
+    }
+  ]
+}

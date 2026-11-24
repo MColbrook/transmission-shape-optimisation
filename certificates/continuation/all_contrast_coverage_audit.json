@@ -1,0 +1,43 @@
+{
+  "status": "all_charts_cover_exactly",
+  "arithmetic": "exact rational sweep; no floating point",
+  "charts": {
+    "center": {
+      "rectangles": 27167,
+      "area": "9/16",
+      "sweep_slabs": 293,
+      "no_gaps_or_overlaps": true,
+      "source": "minimizer_literature/continuation/all_contrast_center_reduced.json"
+    },
+    "A": {
+      "rectangles": 433,
+      "area": "1/4",
+      "sweep_slabs": 49,
+      "no_gaps_or_overlaps": true,
+      "source": "shape_optimization/continuation/all_contrast_endpoint_A_M48.json"
+    },
+    "E": {
+      "rectangles": 1574,
+      "area": "3/16",
+      "sweep_slabs": 80,
+      "no_gaps_or_overlaps": true,
+      "source": "shape_optimization/continuation/all_contrast_endpoint_fast_E.json"
+    },
+    "Esmall": {
+      "rectangles": 773,
+      "area": "3/64",
+      "sweep_slabs": 63,
+      "no_gaps_or_overlaps": true,
+      "source": "shape_optimization/continuation/all_contrast_endpoint_fast_Esmall.json"
+    },
+    "B": {
+      "rectangles": 2141,
+      "area": "1/4",
+      "sweep_slabs": 66,
+      "no_gaps_or_overlaps": true,
+      "source": "shape_optimization/continuation/all_contrast_endpoint_B_covered.json"
+    }
+  },
+  "global_cover": "Center covers 0<=r<=3/4 for every eta. For s=1-r<=1/4, E and Esmall cover eta>=1/16; the original A chart covers 0<=s<=eta<=1/4; B covers eta<=s via delta=eta/s. In B, eta>=1/16 is inherited from E/Esmall, and the remaining subset is sign-verified using capped Robin roots. The endpoint limits are included by the analytic chart factors.",
+  "scope": "Coverage of the calibration charts. Sign bounds are checked separately."
+}

@@ -1,0 +1,1107 @@
+\documentclass[a4paper,11pt]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=28mm]{geometry}
+\usepackage{microtype,booktabs,array,graphicx}
+\usepackage[hidelinks,pdfusetitle]{hyperref}
+\newcommand{\repofile}[2]{\href{https://github.com/MColbrook/transmission-shape-optimisation/blob/main/#1}{#2}}
+\numberwithin{equation}{section}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\D}{\mathbb D}
+\newcommand{\Hcl}{H_0^2}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\trspec}{\sigma_{\mathrm{tr}}}
+\DeclareMathOperator{\Rea}{Re}
+\DeclareMathOperator{\Ima}{Im}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\cof}{cof}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\dist}{dist}
+
+\title[Mathematical supplement]{Mathematical supplement to\\
+Shape optimisation of the least-modulus transmission eigenvalue}
+\author{Matthew J. Colbrook}
+\author{Catherine Drysdale}
+\hypersetup{pdfauthor={Matthew J. Colbrook and Catherine Drysdale}}
+\begin{document}
+\raggedbottom
+\maketitle
+
+Can the same domain beat the disk throughout an interval of
+contrasts? In Section~\ref{sup:trial} we construct a smooth
+domain of area \(\pi\) with a transmission eigenvalue of smaller
+modulus than every disk eigenvalue for each \(n\in[5.18,5.281738]\).
+Section~\ref{sup:hessian} gives the Fourier coefficient bounds for
+the disk Hessian below resonance, including at unit contrast.
+Above resonance, the comparison for one-signed minimisers depends
+on the signs we prove in Section~\ref{sup:radial}.
+
+Let \(\D=\{z\in\mathbb C:|z|<1\}\). We denote the \(k\)-th positive
+zero of the Bessel function \(J_m\) by \(j_{m,k}\) and set
+\[
+ \alpha=j_{0,1}^2,\qquad \beta=j_{1,1}^2,\qquad
+ \zeta=j_{0,2}^2,\qquad N=\zeta/\alpha.
+\]
+For a real field \(u\) on \(\Omega\), let \(I_0,I_1,I_2\) be the squared
+\(L^2(\Omega)\) norms of \(u,\nabla u,\Delta u\), respectively.
+The form at the spectral parameter \(t\) is
+\(q_{\Omega,n}(t;u)=I_2-(n+1)tI_1+nt^2I_0\).
+
+The \href{https://github.com/MColbrook/transmission-shape-optimisation}{companion repository}
+contains the exact data and code. The \repofile{checker-map.md}{certificate index}
+identifies the calculation for each inequality, and the
+\repofile{README.md}{README} gives the verification commands.
+
+\section{Exact trial data}\label{sup:trial}
+
+We start with a polynomial image of the disk. Rational coefficients
+allow us to bound the trial form by exact arithmetic after we
+normalise the area. Define
+\begin{equation}\label{eq:map12}
+ F(z)=z+10^{-8}\sum_{j=0}^{11}a_jz^{2j+3},
+ \qquad f(z)=S^{-1/2}F(z),\qquad \Omega_{12}=f(\D),
+\end{equation}
+where the integer coefficients are
+\[
+\begin{split}
+(a_j)={}&(23661008,\ 944390,\ 841714,\ -267345,\ 182938,\ -115928,\\
+        &\hspace{10mm}80287,\ -57758,\ 42974,\ -32778,\ 25473,\ -19906)
+\end{split}
+\]
+and
+\[
+ S=1+10^{-16}\sum_{j=0}^{11}(2j+3)a_j^2
+   =\frac{11690370621775763}{10^{16}}.
+\]
+Let $g=F'$. The coefficient sum gives
+\[
+ |g(z)-1|\le\eta:=\frac{92297023}{10^8}<1
+ \quad (|z|\le1).
+\]
+Hence \(\Rea g>0\) on a neighbourhood of the closed disk.
+Integrating \(g\) along a chord shows that \(F\) is injective.
+Since \(g\) does not vanish, the image boundary is analytic.
+The conformal area formula gives \(|\Omega_{12}|=\pi\).
+
+For a real clamped trial \(U\) on \(\D\), let \(u=U\circ f^{-1}\).
+We compute its moments \(I_j=I_j(u)\) on \(\Omega_{12}\) by changing
+variables back to the disk.
+\begin{equation}\label{eq:conformal-forms}
+ I_0=\frac1S\int_\D U^2|g|^2,\qquad
+ I_1=-\int_\D U\Delta U,\qquad
+ I_2=S\int_\D\frac{(\Delta U)^2}{|g|^2}.
+\end{equation}
+Set \(s=r^2\) and take the trial
+\begin{equation}\label{eq:trial12}
+ U=(1-s)^2\sum_{j=0}^{6}\sum_{k=0}^{4}
+       \frac{b_{jk}}{10^{10}}\,
+       r^{2j+1}\cos((2j+1)\theta)
+       P_k^{(4,2j+1)}(2s-1),
+\end{equation}
+with the integers \(b_{jk}\) in Table~\ref{tab:trial}.
+The factor \((1-s)^2\) makes both the trace and the normal
+derivative vanish on the boundary. For the Jacobi polynomials in
+\eqref{eq:trial12}, we use
+\[
+ P_k^{(4,m)}(2s-1)
+ =\sum_{i=0}^k
+ \binom{k+4}{i}\binom{k+m}{k-i}s^i(s-1)^{k-i}.
+\]
+
+\begin{table}[!ht]
+\centering\small
+\caption{Integer numerators \(b_{jk}\) for the clamped trial
+\eqref{eq:trial12} on the unit disk. The Jacobi basis coefficients
+are \(b_{jk}/10^{10}\).}\label{tab:trial}
+\begin{tabular}{r r r r r r}
+\toprule
+$j$&$b_{j0}$&$b_{j1}$&$b_{j2}$&$b_{j3}$&$b_{j4}$\\
+\midrule
+0&10000000000&-714354563&-56400458&-2125776&1583967\\
+1&3570773036&-529889309&23843272&-597204&292049\\
+2&785588028&-133167479&9457497&-308100&59819\\
+3&134049214&-29915606&2893523&-135368&8429\\
+4&29725599&-4266203&416310&-17814&2314\\
+5&-1030520&-1130923&153893&-11423&128\\
+6&6047546&300537&6035&2833&353\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+We integrate polynomials using the exact disk moments
+\begin{equation}\label{eq:moments}
+ \frac1\pi\int_\D z^p\overline z^{\,q}
+ =\frac{\mathbf1_{\{p=q\}}}{p+1}.
+\end{equation}
+The reciprocal in \(I_2\) is the only term we approximate. We use
+the recurrence for \(g^{-1}\) to compute an even polynomial \(H\)
+of degree at most \(600\), rounding each step to a multiple of
+\(10^{-24}\). We then compute the residual \(R=1-gH\) exactly
+and set
+\[
+ R_*=\sum_k|[z^k]R|,\qquad e=\frac{R_*}{1-\eta}.
+\]
+Then
+\[
+ \|g^{-1}-H\|_{L^\infty(\D)}\le e,\qquad
+ \frac{I_2}{\pi}\le A_+:=
+ \frac S\pi\int_\D|\Delta U\,H|^2+
+ \frac S\pi\int_\D(\Delta U)^2
+       \left(\frac{2e}{1-\eta}+e^2\right).
+\]
+The moment formula \eqref{eq:moments} and the residual bound give
+\begin{equation}\label{eq:compact-cert}
+ \frac{I_1}{\pi}>\frac{2941129141}{10^{10}},
+ \qquad
+ \frac{I_0}{\pi}<\frac{7471409}{400000000},
+ \qquad
+ A_+<\frac{6923409}{10^6},
+ \qquad e<10^{-10}.
+\end{equation}
+The \repofile{certificates/shape_optimization/certify_near_optimal_domain.py}{trial calculation}
+uses rational arithmetic in the Python standard library.
+
+The saved trial certificate checks the form at \(t=51963/10000\)
+and \(n=263447/50000\). For the comparison at resonance, we use
+the same \(t\) and the slightly smaller contrast
+\(n_0=526893/100000\). The same moment bounds
+\eqref{eq:compact-cert} give
+\[
+ \frac{q_{\Omega_{12},n_0}(t;u)}{\pi}
+ < -\frac{47050322517501147}{4\cdot10^{21}}.
+\]
+At this trial and value of \(t\), we have \(t^2I_0-tI_1<0\) by
+\eqref{eq:compact-cert}, so the form decreases with \(n\).
+The endpoint calculation in the next subsection gives the Bessel
+bounds \(\alpha<5.78319\) and \(\zeta>30.47126\). Thus
+\(N>30.47126/5.78319>n_0\) and the form at \(t=5.1963\) is negative
+at resonance. The crossing lemma in the paper then gives a positive
+real eigenvalue below \(5.1963\).
+
+\subsection{The contrast sweep and endpoint}
+How far from resonance does the same domain improve on the disk?
+We first look for a bound that lies above the first positive real
+eigenvalue of \(\Omega_{12}\) and below the modulus of every disk
+eigenvalue. On the closed contrast interval
+\([259/50,5281/1000]\), set
+\[
+ T(n)=\frac{519631}{100000}
+      -\frac54\left(n-\frac{263447}{50000}\right)
+      +\frac12\left(n-\frac{263447}{50000}\right)^2 .
+\]
+The moment bounds \eqref{eq:compact-cert} give a degree-five upper
+bound for \(q_{\Omega_{12},n}(T(n);u)/\pi\). Each Bernstein
+coefficient of this polynomial on the interval is less than
+\(-2.64\cdot10^{-6}\), so the form is negative throughout.
+
+For the disk we start with the radial sector. We truncate the
+entire function \(E_n\) from Section~\ref{sup:hessian} at degree
+\(32\). For \(1\le n\le6\) and \(|z|\le8\), the term of degree \(k\)
+has modulus at most \(28^k/(k!)^2\). Its first partial derivatives
+are bounded by \(k\) times this quantity. We bound each tail by
+a geometric series beginning at degree \(33\).
+
+The interval calculation encloses
+\(E_n(T(n)(1-s^2+2is)/(1+s^2))\) on \(1561\) rectangles in the
+contrast and \(s\) variables, with \(0\le s\le1\). Every enclosure
+excludes zero. This gives the zero-free contour used for the radial
+count in the paper. The count is zero at resonance and hence remains
+zero inside \(|z|=T(n)\) throughout the interval.
+
+For nonreal values, the angular lower bound excludes every sector
+of order \(m\ge1\). For positive real values, we check the first
+two angular determinants on \(29\) contrast cells and use the Bessel
+signs to exclude the higher sectors. The
+\repofile{certificates/continuation/certify_contrast_interval.json}{interval data}
+give the exact partitions and the bounds for both interval tests.
+
+At the upper endpoint \(n_b=5.281738\), we test the trial at the
+active radial disk eigenvalue \(\ell(n_b)\). In the
+\repofile{certificates/check_transition_endpoints.mjs}{endpoint calculation},
+we bracket the ordinary Bessel series by the alternating partial
+sums through indices \(30\) and \(31\). For the modified series,
+the squared Bessel argument lies in \((0,31)\), and the tail beyond
+index \(30\) is at most \(100/99\) times the first omitted term.
+We obtain
+\[
+ 5.1803707<\ell(5.281738)<5.1803709,\qquad
+ t_D(5.281738)<142,
+\]
+where \(t_D(n)=n\ell(n)^2\) for the active radial eigenvalue
+\(\ell(n)\) above resonance. This bracket and the trial moment
+bounds give an upper bound less than \(-3.28\cdot 10^{-6}\) for
+\(q_{\Omega_{12},n_b}(\ell(n_b);u)/\pi\). The slope of the disk
+envelope carries the strict comparison back to resonance.
+Together with the contour calculation, this covers the closed
+interval \([5.18,5.281738]\).
+
+The same series bounds give \(10.21582622<\gamma<10.21582624\)
+for the square root of the first clamped-plate value on \(\D\).
+Comparing \(t_D(n)\) with \(\gamma^2\) brackets the plate cutoff in
+\((5.4254619,5.4254621)\). The integer inequality
+\(104\cdot207>142^2\) is the product estimate used in the paper's
+plate gap argument.
+
+\section{Subresonant Hessian certificates}\label{sup:hessian}
+
+Let \(\lambda_0\) be the upper member of the least-modulus disk
+pair for \(1\le n<N\). The disk count in the paper gives at most one
+eigenvalue in the upper half-plane with
+\(\lvert\sqrt n\,\lambda\rvert\le14\). Thus, to identify \(\lambda_0\)
+on a contrast interval, it suffices to enclose a radial zero in this
+region, where the paper places the upper member of the least-modulus
+pair. At \(n=1\) we use the clamped pencil \((\Delta+\lambda)^2\).
+
+Set \(x=\lambda_0\), \(y=n\lambda_0\) and
+\(\kappa=\sqrt{x}J_0'(\sqrt{x})/J_0(\sqrt{x})\).
+For \(m\ge1\), let \(V_m\) be the radial factor of order \(m\) with
+\(V_m(1)=0\) and \(V_m'(1)=1\). For \(n>1\), we solve for the
+coefficients of \(J_m(\sqrt{x}\,r)\) and \(J_m(\sqrt{y}\,r)\) from
+these two conditions. The determinant of this system is nonzero
+since the kernel at \(\lambda_0\) is radial. For
+\(B_m=V_m''(1)+1-\kappa\), this gives
+\begin{equation}\label{um:B-def}
+ B_m=-\kappa
+ -\frac{(y-x)J_m(\sqrt x)J_m(\sqrt y)}
+ {\sqrt yJ_m'(\sqrt y)J_m(\sqrt x)
+       -\sqrt xJ_m'(\sqrt x)J_m(\sqrt y)}.
+\end{equation}
+At \(n=1\), we take the confluent value of \eqref{um:B-def} using
+the basis obtained by a divided difference of the radial solutions
+at \(x\) and \(y\).
+
+To enclose the radial zeros, we use the normalised determinant
+\[
+ E_n(\lambda)
+ =\sum_{k=0}^\infty\frac{(-\lambda/4)^k}{k+1}
+             \sum_{j=0}^k\frac{n^j}{j!^2(k-j)!^2}.
+\]
+For \(n>1\), the radial Wronskian identity gives the boundary
+determinant \(D_0=(1-n)\lambda E_n/2\). Integrating the Bessel
+products term by term gives the series. At \(n=1\), dividing
+the Wronskian by \(1-n\) before taking the limit gives the boundary
+determinant of the confluent radial basis.
+
+Set \(t=\sqrt n\), \(\mu=t\lambda\) and \(u=t+t^{-1}\). We
+expand the symmetric Laurent coefficients of \(E_{t^2}(\mu/t)\)
+in powers of \(u\) to obtain the degree-\(24\) truncation
+\begin{equation}\label{uh:Q}
+ Q(\mu,u)=\sum_{k=0}^{24}\sum_{j=0}^{\lfloor k/2\rfloor}
+       \frac{(-\mu)^k u^{k-2j}}
+              {4^k(k+1)k!(j!)^2(k-2j)!}.
+\end{equation}
+To bound the error for \(t|\mu|\le b\), we use the unit-contrast
+series with positive coefficients. Its coefficient of \(b^k\) is
+\(\binom{2k}{k}/[4^k(k+1)(k!)^2]\). For \(d\le3\), the
+order-\(d\) derivative tail at \(b\), multiplied by \(t^d\),
+bounds the error after \(d\) differentiations in \(\mu\). In that
+tail, the ratio of the terms of original indices \(k+1\) and \(k\)
+is at most \(b/[(k+2)(k+1-d)]\) for \(k\ge25\). This allows us to
+bound each tail by a geometric series.
+
+The numerator and denominator in \eqref{um:B-def} both vanish
+as \(y\to x\). We use an integral formula that also applies at
+unit contrast. Let
+\[
+ T_m(z)=\sum_{j=0}^\infty\frac{(-z/4)^j m!}{j!(m+j)!},
+ \qquad
+ L_m=2\int_0^1r^{2m+1}T_m(xr^2)T_m(yr^2)\,\mathrm dr .
+\]
+Thus \(T_m(z)=m!(2/\sqrt z)^m J_m(\sqrt z)\), with the value at
+zero given by the series. The Wronskian identity now gives
+\begin{equation}\label{um:B-integral}
+ B_m=-\kappa+\frac{2T_m(x)T_m(y)}{L_m},
+ \qquad
+ \kappa=-\frac{x T_1(x)}{2T_0(x)}.
+\end{equation}
+The term of order \(k\) in \(L_m\) equals
+\[
+ \frac{(-\mu/4)^k(m!)^2}{m+k+1}
+   \sum_{j=0}^k\frac{t^{2j-k}}
+        {j!(k-j)!(m+j)!(m+k-j)!}.
+\]
+Pairing reciprocal powers of \(t\) shows that the absolute
+coefficient is nondecreasing for \(t\ge1\). The radial coefficient
+bounds it from above. For \(T_m\), the ratio of successive terms
+at \(|z|\le b\) is bounded by \(b/[4(k+1)(m+k+1)]\) for \(k\ge31\).
+We use this ratio for the tail of its degree-\(30\) truncation.
+
+We will use the Bessel product to bound the modes of high order.
+Matching the first two Taylor coefficients gives, for \(A_j=j_{m,j}^2\),
+\begin{equation}\label{uh:rayleigh}
+ \sum_j A_j^{-1}=\frac{1}{4(m+1)},\qquad
+ \sum_j A_j^{-2}=\frac{1}{16(m+1)^2(m+2)}.
+\end{equation}
+In particular, \(A_1>4(m+1)\sqrt{m+2}\).
+The first angular order comes from translations. Differentiating
+the radial state in a Cartesian direction gives the field with
+radial factor \(V_1\) once we normalise its derivative trace. With
+the radial mode \(U\) normalised by \(U''(1)=1\), we have
+\(U'''(1)=\kappa-1\), so \(B_1=0\), including at unit contrast.
+
+\subsection{The first compact interval}
+\begin{proposition}[Extended all-mode Hessian bound]
+\label{ux:hessian}
+For every \(1\le n\le441/100\), one has \(B_1(n)=0\) and
+\[
+ \operatorname{Re}B_m(n)>\frac14(m+1),\qquad
+ |B_m(n)|<14(m+1),\qquad m\ge2.
+\]
+\end{proposition}
+
+\begin{proof}
+We use the \(550\) closed rational intervals in
+\path{subresonant/unit_midrange/extension/centres.json}. These
+cover \([1,21/10]\) in \(t\) and adjoining intervals share an
+endpoint. On each interval we enclose the root in a circle with
+rational centre \(z_c\) chosen numerically. The interval lengths
+and radii are
+\[
+\begin{array}{c|c|c}
+ \text{parameter range}&\text{maximum length}&\text{radius }r\\
+ {[1,3/2]}&1/200&1/50\\
+ {[3/2,19/10]}&1/500&3/200\\
+ {[19/10,41/20]}&1/1000&1/100\\
+ {[41/20,21/10]}&1/2000&3/400.
+\end{array}
+\]
+We bound the residual by \(\epsilon\) using the value of
+\(Q(z_c,u)\) at the midpoint in \(u\), its \(u\)-derivative on the
+whole interval and the positive series tail at argument \(30\).
+We evaluate \(\partial_\mu Q(z_c,u)\) over the same interval and
+subtract the derivative tail from the resulting lower bound. This
+gives a positive lower bound \(d_1\) for the modulus of the
+derivative of the full series. To bound the second derivative,
+we take a rational upper bound \(s_c\) for \(|z_c|\) and use a
+radius \(R_c\) satisfying
+\[
+ R_c=s_c+2r<14,\qquad t_+R_c<25.
+\]
+The absolute coefficient sum at \(R_c\), together with the second
+derivative tail, gives an upper bound \(d_2\) throughout the root
+circle. In these bounds the order-\(j\) tails carry the factor
+\((21/10)^j\). On every interval we verify
+\[
+ \epsilon+\frac12r^2d_2<rd_1.
+\]
+Taylor's formula and Rouch\'e's theorem therefore give one zero
+in \(|\mu-z_c|<r\) for every parameter in the interval. The checks
+\(\operatorname{Im}z_c>r\) and \(R_c<14\) place that zero in the
+region of the disk count, which identifies the upper disk value.
+
+We now enclose \(\mu\) in the square
+\[
+ |\operatorname{Re}(\mu-z_c)|\le r,\qquad
+ |\operatorname{Im}(\mu-z_c)|\le r.
+\]
+We still have \(|\mu|<R_c\) on the square. Using the intervals
+\([1/t_+,1/t_-]\) and \([t_-,t_+]\) gives enclosures for
+\(x=\mu/t\) and \(y=t\mu\), with
+\[
+ |x|,|y|<25.
+\]
+In \eqref{um:B-integral}, we evaluate \(T_m\) to degree \(30\)
+with a geometric tail at argument \(25\). For \(L_m\) we use
+degree \(24\) and the radial tail at argument \(30\).
+The coefficient magnitudes of \(L_m\) are nondecreasing in
+\(t\ge1\), so the endpoint values bound them on each interval.
+With rational complex intervals we obtain
+\[
+ \operatorname{Re}\kappa_n<3,\qquad |\kappa_n|<10,
+\]
+and the asserted inequalities for \(2\le m\le6\). Each
+denominator rectangle excludes zero. The interval coverage and
+all these comparisons are verified in
+\path{subresonant/unit_midrange/extension/check_hessian.py}.
+
+For \(m\ge7\), let \(A_j=j_{m,j}^2\). The Rayleigh sum \eqref{uh:rayleigh} gives
+\[
+ A_j\ge A_1>4(m+1)\sqrt{m+2}\ge12(m+1)\ge96.
+\]
+For
+\[
+ S_m=\sum_j\frac{A_j}{(A_j-x)(A_j-y)},\qquad
+ s_m=\frac1{4(m+1)},
+\]
+the Bessel product gives \(B_m=-\kappa_n+1/(2S_m)\).
+Since \(|x|,|y|<25\),
+\[
+ |S_m-s_m|\le d s_m,\qquad
+ d=\left(1-\frac{25}{96}\right)^{-2}-1
+   =\frac{4175}{5041}<1.
+\]
+Inverting this disk proves
+\[
+ \operatorname{Re}B_m
+ \ge\frac{2(m+1)}{1+d}-3>\frac14(m+1),
+ \qquad
+ |B_m|\le10+\frac{2(m+1)}{1-d}<14(m+1).
+\]
+The strict comparisons hold at \(m=7\) by rational arithmetic
+and improve with \(m\). The translation identity gives \(B_1=0\).
+\end{proof}
+
+\subsection{A compact cone comparison}
+\label{uh:compact-section}
+
+On the next interval we bound the arguments of \(\kappa\)
+and \(x/\kappa\). Use
+\[
+ x=\lambda_0(n),\qquad y=n\lambda_0(n),\qquad
+ \mu=\sqrt n\,\lambda_0(n),\qquad
+ \kappa=\frac{\sqrt xJ_0'(\sqrt x)}{J_0(\sqrt x)},\qquad
+ Z=\frac{x}{\kappa}.
+\]
+Neither denominator vanishes, since the nonzero zeros of the
+Bessel functions are real and \(x\) is nonreal.
+
+\begin{proposition}[Compact cone bounds]
+\label{uh:compact-cones}
+For
+\[
+ \frac{441}{100}\le n\le
+       \left(\frac{459083}{200000}\right)^2,
+\]
+the active radial pair satisfies
+\[
+ -\operatorname{Re}\kappa>\frac{|\kappa|}{8},\qquad
+ -\operatorname{Re}Z>\frac{|Z|}{3},\qquad
+ \operatorname{Re}(Z^2)<0.
+\]
+\end{proposition}
+
+\begin{proof}
+We use the \(808\) closed rational intervals in
+\repofile{subresonant/unit_midrange/cap/hessian_compact_centres.json}{centre data}.
+Adjoining intervals share an endpoint, and together they cover
+\[
+ 21/10\le t=\sqrt n\le459083/200000,
+\]
+The centres \(z_c\) are chosen numerically. To enclose a zero
+throughout each interval, we use the polynomial \(Q(\mu,u)\) in
+\eqref{uh:Q}. The residual at \(z_c\) is bounded by
+\[
+ |Q(z_c,u_c)|
+ +\frac{u_+-u_-}{2}
+       \sup_{u_-\le u\le u_+}|\partial_uQ(z_c,u)|+\tau_0.
+\]
+Here \(u_c\) is the midpoint of \([u_-,u_+]\) and \(\tau_j\)
+bounds the order-\(j\) derivative tail of the positive unit-contrast
+series at argument \(31\). We use the same geometric estimate as
+before, with a factor at most \((23/10)^j\) for differentiation in
+\(\mu\). On every interval we have
+\[
+ |z_c|+2r<53/4,\qquad
+ t_+(|z_c|+2r)<31,\qquad \operatorname{Im}z_c>r.
+\]
+
+To bound the modulus of the spectral derivative from below, we
+take the larger of the lower bounds for the absolute real and
+imaginary parts of \(\partial_\mu Q(z_c,u)\) and subtract the
+derivative tail. This gives a positive bound \(d_1\). For the
+second derivative, we use its value at the centre and a bound on
+the third derivative throughout the circle. The resulting bound is
+\[
+ d_2=\sup_{u_-\le u\le u_+}
+          |\partial_{\mu\mu}Q(z_c,u)|
+       +(23/10)^2\tau_2+rM_3,
+\]
+where \(M_3\) is an absolute coefficient bound for the full
+third derivative on \(|\mu|\le|z_c|+2r\).
+With \(\epsilon\) the residual bound, we verify on every interval that
+\[
+ \epsilon+\frac12r^2d_2<rd_1.
+\]
+Taylor's formula and Rouch\'e's theorem give one upper
+root in \(|\mu-z_c|<r\) for every parameter in the interval.
+The disk count again identifies the upper disk value.
+
+We enclose the root in the square of half-width \(r\) and use
+the interval for \(1/t\) to get a rectangle for \(x\).
+For the normalised Bessel functions
+\[
+ T_m(s)=m!\left(\frac2{\sqrt s}\right)^mJ_m(\sqrt s)
+\]
+we use degree \(30\) and the geometric tails at argument \(31\)
+to evaluate
+\[
+ \kappa=-\frac{xT_1(x)}{2T_0(x)},\qquad
+ Z=-\frac{2T_0(x)}{T_1(x)}.
+\]
+The second formula cancels the common factor \(x\) before
+interval evaluation. Each denominator rectangle excludes zero.
+With \(K\) and \(W\) the resulting rectangles, we verify
+\[
+ \sup\operatorname{Re}K<0,\qquad
+ 63\bigl(-\sup\operatorname{Re}K\bigr)^2
+       >\sup|\operatorname{Im}K|^2,
+\]
+\[
+ \sup\operatorname{Re}W<0,\qquad
+ 8\bigl(-\sup\operatorname{Re}W\bigr)^2
+       >\sup|\operatorname{Im}W|^2,
+ \qquad \sup\operatorname{Re}(W^2)<0.
+\]
+These inequalities give the three bounds in the proposition.
+The rational comparisons, including the interval coverage, are
+verified in \path{subresonant/unit_midrange/cap/hessian_compact_check.py}.
+\end{proof}
+\subsection{Cone bounds up to resonance}
+\label{uhe:section}
+
+The logarithmic derivative \(\kappa\) has a pole at \(x=\alpha\).
+To obtain cone bounds up to resonance, we use \(x=\lambda_0(n)\)
+and set
+\[
+ \kappa=\frac{\sqrt xJ_0'(\sqrt x)}{J_0(\sqrt x)},\qquad
+ \eta=(N-n)^{1/3}.
+\]
+We enclose the root in a fixed disk in the variable
+\(z=(x-\alpha)/\eta\). The resulting contrast interval overlaps
+the interval in Proposition~\ref{uh:compact-cones}.
+
+\begin{proposition}[Endpoint cone bounds]\label{uhe:cones}
+For every \(0<\eta\le1/40\), with \(n=N-\eta^3\), one has
+\[
+ -\operatorname{Re}\kappa>\frac{|\kappa|}{6},\qquad
+ -\operatorname{Re}\frac{x}{\kappa}>
+                 \frac14\left|\frac{x}{\kappa}\right|,\qquad
+ \operatorname{Re}\!\left[\left(\frac{x}{\kappa}\right)^2\right]<0.
+\]
+Moreover,
+\[
+ x=\alpha+\eta z,\qquad
+ \left|z-\left(-1.30655+2.26302\,i\right)\right|<\frac1{10}
+\]
+throughout this interval. All stated decimal values are exact
+terminating rational numbers.
+\end{proposition}
+
+\begin{proof}
+We first enclose the squared Bessel zeros \(\alpha\) and \(\zeta\)
+by checking the signs at the endpoints of the brackets
+\[
+ \begin{split}
+ 5.78318596294&<\alpha<5.78318596296,\\
+ 30.47126234365&<\zeta<30.47126234368.
+ \end{split}
+\]
+We use degree-\(40\) Bessel series with tails bounded by the
+first omitted absolute term times \((1-b/(4\cdot42^2))^{-1}\),
+where \(b\le31\). The known zero ordering identifies \(\alpha\)
+and \(\zeta\) as the squared zeros in these brackets.
+
+To expand the determinant near resonance, we work with Bessel
+functions normalised at each zero. For \(a=\alpha,\zeta\), let
+\[
+ f_a(h)=
+ \frac{J_0(\sqrt{a+h})}
+      {\left.\frac{\mathrm d}{\mathrm dz}J_0(\sqrt z)\right|_{z=a}}.
+\]
+The zero at \(a\) is simple, so \(f_a\) is well defined and
+satisfies \(f_a(0)=0\) and \(f_a'(0)=1\). The Bessel equation gives
+\[
+ (a+h)f_a''+f_a'+\frac14f_a=0.
+\]
+Substituting \(f_a(h)=\sum_{j\ge0}c_j(a)h^j\) gives the recurrence
+\[
+ c_0=0,\quad c_1=1,\qquad
+ a(j+2)(j+1)c_{j+2}
+ =-(j+1)^2c_{j+1}-\frac14c_j.
+ \tag{UHE1}\label{uhe:recurrence}
+\]
+In particular,
+\[
+ f_a(h)=h-\frac{h^2}{2a}
+        +\left(\frac1{3a^2}-\frac1{24a}\right)h^3+O(h^4).
+\]
+
+Set \(x=\alpha+\eta z\), \(y=nx\), and
+\[
+ h_x=\eta z,\qquad
+ h_y=N\eta z-\alpha\eta^3-\eta^4z.
+\]
+The radial characteristic equation is
+\[
+ D(\eta,z):=
+ x f_\alpha'(h_x)f_\zeta(h_y)
+ -y f_\zeta'(h_y)f_\alpha(h_x)=0.
+\]
+Using \(\zeta=N\alpha\), we find that the coefficients of
+\(\eta^0,\eta^1,\eta^2\) vanish identically. Substituting the
+coefficients from \eqref{uhe:recurrence} gives
+\[
+ \frac{D(\eta,z)}{\eta^3}
+ =\frac{N(N-1)}{12}z^3-\alpha^2+O(\eta).
+ \tag{UHE2}\label{uhe:normalised-D}
+\]
+Indeed, \(x f_\alpha'(h_x)=\alpha-h_x^2/8+O(h_x^3)\).
+The coefficient of \(\eta^3z^3\) in \(D\) is
+\[
+ \alpha N^3c_3(\zeta)-\zeta c_3(\alpha)
+       +\frac{N^2-N}{8}
+ =\frac{N(N-1)}{12},
+\]
+while the constant part at that order is \(-\alpha^2\).
+Thus the quotient extends analytically to \(\eta=0\). We use
+the cancellation of the first three coefficients before evaluating
+the quotient in intervals.
+
+To bound the determinant of the truncated series, we first need
+uniform bounds on the tails of \(f_a\) and \(f_a'\). Let \(a_-\)
+be the lower endpoint of the bracket for \(a\), and let
+\[
+ L_a=\max\{|c_{11}(a)|a_-^{10},\,|c_{12}(a)|a_-^{11}\},
+\]
+where we use interval upper bounds for the coefficient absolute
+values. The recurrence \eqref{uhe:recurrence} gives
+\[
+ |c_j(a)|\le L_a a_-^{1-j},\qquad j\ge11.
+\]
+The induction step holds whenever \(j\ge a_-/4\), which is true
+in this range for both choices of \(a\). For \(|h|\le\eta H\),
+\(\eta\le\eta_0=1/40\) and \(q=\eta_0H/a_-<1\), summing the
+tails gives
+\[
+ \begin{split}
+ \left|f_a(h)-\sum_{j=0}^{12}c_j(a)h^j\right|
+ &\le
+ \eta^{13}L_a a_-\frac{(H/a_-)^{13}}{1-q},\\
+ \left|f_a'(h)-\sum_{j=1}^{12}jc_j(a)h^{j-1}\right|
+ &\le
+ \eta^{12}L_a(H/a_-)^{12}
+       \left(\frac{13}{1-q}+\frac q{(1-q)^2}\right).
+ \end{split}
+ \tag{UHE3}\label{uhe:tail}
+\]
+Since \(f_\alpha(h_x)\) and \(f_\zeta(h_y)\) are both \(O(\eta)\),
+the tail in \(D(\eta,z)\) is \(O(\eta^{13})\). After dividing by
+\(\eta^3\), the bounds in \eqref{uhe:tail} give an explicit
+constant times \(\eta_0^{10}\).
+
+We expand the truncated determinant in powers of \(\eta\), use
+the leading quotient coefficient in \eqref{uhe:normalised-D}
+and bound the higher coefficients on the closed disk
+\[
+ |z-z_c|\le r,\qquad
+ z_c=-1.30655+2.26302\,i,\quad r=1/10,
+\]
+We then add the determinant tail from \eqref{uhe:tail}.
+Take \(C_0\) and \(\alpha_0\) to be the midpoints of the brackets
+for \(N(N-1)/12\) and \(\alpha\), respectively. On the boundary of
+the disk, the reference cubic \(C_0z^3-\alpha_0^2\) has modulus
+at least
+\[
+ 3C_0|z_c|^2r-3C_0|z_c|r^2-C_0r^3
+       -|C_0z_c^3-\alpha_0^2|.
+\]
+We use complex interval bounds in this expression. The total
+parameter, polynomial and tail error is less than the contour
+bound, with relative margin greater than \(0.5229\). Positivity
+of the contour bound also allows us to compare the reference cubic
+with \(3C_0z_c^2(z-z_c)\). Applying Rouch\'e's theorem twice gives
+one root in the disk for every \(0\le\eta\le1/40\). For
+\(\eta>0\), the corresponding \(x\) has positive imaginary part
+and \(|\sqrt n\,x|<14\), so the disk count identifies the upper
+branch.
+
+Since \(x-\alpha=\eta z\), we bound the rescaled quantities
+\[
+ K=\eta\kappa
+   =\frac{2x f_\alpha'(\eta z)}{f_\alpha(\eta z)/\eta},
+ \qquad
+ \widetilde Z=\frac{x}{K}
+   =\frac{f_\alpha(\eta z)/\eta}{2f_\alpha'(\eta z)}.
+\]
+Both formulas extend to \(\eta=0\) in our disk. Using degree-\(12\)
+series and \eqref{uhe:tail} gives the enclosures
+\[
+ \begin{array}{c|cc}
+       &\operatorname{Re}&\operatorname{Im}\\ \hline
+ K&[-2.724,-1.758]&[-4.554,-3.231]\\
+ \widetilde Z&[-0.720,-0.591]&[1.061,1.196].
+ \end{array}
+\]
+The rational bounds give margins greater than \(83.11\) and
+\(3.6496\) in the two squared cone inequalities, and give
+\(\operatorname{Re}(\widetilde Z^2)<-0.6079\).
+Thus \(-\operatorname{Re}K>|K|/6\),
+\(-\operatorname{Re}\widetilde Z>|\widetilde Z|/4\) and
+\(\operatorname{Re}(\widetilde Z^2)<0\). Since \(\eta>0\), the
+same cones contain \(\kappa=K/\eta\) and
+\(x/\kappa=\eta\widetilde Z\).
+
+It remains to check that the two contrast intervals overlap.
+The Bessel brackets give
+\[
+ N-\frac1{64000}
+ <\left(\frac{459083}{200000}\right)^2<N.
+\]
+All the interval comparisons above are verified in
+\repofile{subresonant/unit_midrange/cap/hessian_endpoint_check.py}{endpoint checker}.
+\end{proof}
+
+\section{The radial calibration certificates}\label{sup:radial}
+
+The comparison for one-signed minimisers above resonance comes
+down to the signs of \(\bar u,p,\phi,T,a\) and \(4a-D^2\) for
+\(0<\eta<1\) and \(0<r<1\). Some of these quantities vanish
+at the endpoints. To obtain strict bounds on closed rectangles,
+we first factor out the zeros.
+
+\subsection{A regular parameter for the whole radial branch}
+
+Set \(E(z)=J_0(\sqrt z)+\sqrt zJ_1(\sqrt z)\).
+For \(\eta\in[0,1]\), let \(\lambda(\eta)\in[0,\alpha]\)
+and \(\mu(\eta)\in[\beta,\zeta]\) be the two branches of the Robin
+equation
+\[
+ (1-\eta)J_0(\sqrt z)-\eta\sqrt zJ_1(\sqrt z)=0 .
+\]
+For \(0<\eta<1\), the radial logarithmic derivative
+\(\sqrt z J_0'(\sqrt z)/J_0(\sqrt z)\) takes the same value
+\(1-1/\eta\) at these two roots. As \(\eta\) increases from \(0\)
+to \(1\), the roots run from \(\alpha\) to \(0\) and from \(\zeta\)
+to \(B=\beta\), respectively. Both branches are analytic at
+\(\eta=0,1\). In the interior each branch \(x\) satisfies
+\[
+ x_\eta=-\frac{2x}{(1-\eta)^2+x\eta^2},
+\]
+and therefore
+\[
+ \frac{\dd}{\dd\eta}\log\frac{\mu}{\lambda}
+ =\frac{2(\mu-\lambda)\eta^2}
+ {[(1-\eta)^2+\lambda\eta^2][(1-\eta)^2+\mu\eta^2]}>0.
+\]
+Thus the ratio \(n=\mu/\lambda\) increases from \(N\) to \(\infty\),
+with \(\lambda=\ell(n)\). The parameter \(\eta\) keeps both roots
+bounded even as \(n\) tends to infinity. Let \(\kappa=1-1/\eta\)
+be the common logarithmic derivative of the two Bessel factors.
+The profile
+\begin{equation}\label{eq:all-profile}
+ \bar u(r)=\frac1{\mu-\lambda}
+ \left\{\frac{J_0(\sqrt\lambda r)}{E(\lambda)}
+       -\frac{J_0(\sqrt\mu r)}{E(\mu)}\right\}
+\end{equation}
+satisfies
+\[
+ \bar u(1)=\bar u'(1)=0,\qquad
+ \bar u''(1)=\eta,\qquad \bar u'''(1)=-1,
+\]
+\[
+ \Delta^2\bar u+c\Delta\bar u+d\bar u=0,
+ \qquad c=\lambda+\mu,\quad d=\lambda\mu.
+\]
+For \(0<\eta<1\), the identity \(\eta/J_0(\sqrt x)=1/E(x)\)
+on the Robin curve gives \(\bar u=\eta U\), where \(U\) is
+the radial disk field normalised by \(U''(1)=1\).
+The bounds from \path{robin_denominators.py},
+\[
+ E(\lambda)>\tfrac12,\qquad E(\mu)<-\tfrac14,
+ \qquad \mu-\lambda>8,\qquad \sqrt\mu<6,
+\]
+give a joint analytic continuation of \(\bar u\) in \(r\) and
+\(\eta\) to both endpoints. The check \path{robin_normalization_bounds.py}
+gives \(\sqrt\alpha J_1(\sqrt\alpha)>1\).
+Combining these bounds with the integral representation of \(J_0\),
+we obtain, for every integer \(j\ge0\),
+\begin{equation}\label{eq:all-uniform-derivatives}
+ |\bar u^{(j)}(r)|\le6^j,\qquad
+ |\phi^{(j)}(r)|\le3^j,
+ \qquad
+ \phi(r)=\frac{J_0(\sqrt\alpha r)}{\sqrt\alpha J_1(\sqrt\alpha)}.
+\end{equation}
+We use the estimate on the combined profile \(\bar u\) to bound
+the Taylor tails. At the boundary we use two auxiliary solutions
+to separate the dependence on \(\eta\) in the Taylor coefficients.
+
+\subsection{The calibration and its exact identities}
+
+The calibration uses the ratio \(t=\bar u/p\), where \(p\) is
+the negative radial derivative of \(\bar u\). For \(0<r<1\) set
+\begin{gather*}
+ p=-\bar u',\quad A=-p'/p,\quad C=-1/r,\quad
+ t=\bar u/p,\quad T=tA-1,\\
+ H(r)=\int_0^r s\bar u(s)\dd s,\quad R=-dH/(rp),\\
+ f=\eta\phi/p,\quad w=\eta\phi'/p,\quad
+ z=(w+Af)/T,\quad g=f-tz,\quad a=1-g^2,\\
+ G=r^2\{w^2-Cfw+\alpha f^2-A_r-(1+Ct)R+dt^2\},\\
+ b=-tR-A-GC-fw,\quad D=2G-tG_r/T.
+\end{gather*}
+The signs established below give \(t_r<0\) and \(t\) runs from
+infinity to zero for each fixed \(0<\eta<1\). This lets us regard
+these quantities as functions of \(t\). The radial equations are
+\begin{gather*}
+ A_r=R+A^2+AC+c-C^2,\quad C_r=C^2,\quad t_r=T,\quad
+ R_r=(A+C)R-dt,\\
+ f_r=w+Af,\qquad w_r=(A+C)w-\alpha f.
+\end{gather*}
+Substituting these radial equations gives
+\begin{align}
+ G_r&=(2A-C)G+2C-A-tR-fw=b+2AG+2C,\nonumber\\
+ b&=-G_t-DA-2C,\nonumber\\
+ -2b+tb_t-2aA-DC&=-2zg,\label{eq:all-identities}\\
+ aA^2+C^2+DAC-b_t&=-c+dt^2-z^2+\alpha f^2.\nonumber
+\end{align}
+To apply the square completion we need
+\begin{equation}\label{eq:all-PSD}
+ \bar u,p,\phi>0,\qquad T<0,\qquad
+ a>0,\qquad 4a-D^2>0\qquad(0<r<1).
+\end{equation}
+The last two inequalities give positive definiteness of the
+quadratic form in the completion.
+
+\subsection{Interval bounds at the centre and boundary}
+
+How do we check \eqref{eq:all-PSD} near the endpoints? At the
+centre we use the evenness of the radial fields. Near \(r=1\) we
+factor their zeros and resolve the joint limit \(\eta=0,r=1\).
+
+In the centre chart set $s=r^2$, $\bar u=V(s)$ and $\phi=W(s)$.
+Define
+\begin{gather*}
+ t_0=-\frac{V}{2V'},\qquad A_0=-1-\frac{2sV''}{V'},\qquad
+ T_0=t_0A_0-s,\\
+ f_0=-\frac{\eta W}{2V'},\qquad
+ w=-\frac{\eta W'}{V'},\qquad
+ R=\frac{d}{4V'}\frac1s\int_0^sV.
+\end{gather*}
+The nonsingular formulas are
+\begin{align*}
+ g^2&=\frac{s(f_0+t_0w)^2}{T_0^2},\\
+ G&=1+A_0-A_0^2-cs-(2s-t_0)R+dt_0^2
+             +sw^2+f_0w+\alpha f_0^2,\\
+ D&=\frac{-G(2s+t_0)+t_0(t_0R+A_0+f_0w+2)}{T_0}.
+\end{align*}
+We evaluate these expressions on \(0\le\eta\le1\), \(0\le s\le9/16\)
+using Bessel series and interval bounds on their derivatives. Define
+\[
+ \mathcal B_m(z)=\sum_{k=0}^{\infty}\frac{(-z/4)^k}{k!(k+m)!},
+ \qquad \mathcal B_m'=-\mathcal B_{m+1}/4.
+\]
+Every Bessel argument lies in $[0,36]$. The degree-$K$ truncation,
+with $K=30$, has absolute tail at most
+\[
+ \mathcal T_K=\frac{9^{K+1}}{((K+1)!)^2[1-9/(K+2)^2]}.
+\]
+Poisson's integral gives \(|\mathcal B_m(z)|\le1/m!\) for real \(z\ge0\).
+For an interval argument of width \(w_*\), we evaluate the
+truncation at the midpoint and widen the enclosure by
+\(w_*/[8(m+1)!]+\mathcal T_K\). The derivative bounds follow by
+applying the same estimates to \(\mathcal B_m'\) and
+\(\mathcal B_m''=\mathcal B_{m+2}/16\).
+
+To bound \(a\) and \(4a-D^2\), we first enclose
+\(h=(f_0+t_0w)/T_0\) and \(D\), using
+\[
+ h=\frac{\eta(VW'-WV')}{VV'+2sVV''-2s(V')^2},\qquad a=1-sh^2.
+\]
+For a rectangle \(Q\) with centre \(q_0\) and coordinate
+increments \((e,z)\), Taylor's formula with integral remainder
+encloses each of \(L=h,D,-T_0,V,-V'\) in the interval
+\[
+ L(q_0)+L_\eta(q_0)e+L_s(q_0)z
+ +\tfrac12L_{\eta\eta}(Q)e^2+L_{\eta s}(Q)ez
+ +\tfrac12L_{ss}(Q)z^2.
+\]
+We differentiate in exact interval arithmetic and check the
+intermediate denominators before dividing. This gives
+\(a>87/1000\) and \(4a-D^2>3/10000\) on the centre chart.
+
+At the boundary we use \(s=1-r\) and factor the fields as
+\[
+ \bar u=s^2U,\quad p=sP,\quad\phi=sF,\quad
+ Q=P+sP_s,\quad L=Q_s,\quad J=F+sF_s,
+ \quad Z=P^2-UQ.
+\]
+Integration of the radial equation gives
+$dH=1-\eta-ds^3K$ with $K$ analytic. Then
+\[
+ T=-Z/P^2,\qquad g=\eta(FP-UJ)/Z,\qquad G=s\mathcal W/P^2,
+\]
+where
+\begin{align*}
+ s^3\mathcal W={}&r^2(\eta^2J^2-Q^2)
+  +s(r^2PL-r\eta^2FJ)+(1-\eta)s(rP-sU)\\
+ &+\alpha\eta^2s^2r^2F^2
+  +ds^4\{r^2U^2-K(rP-sU)\}.
+\end{align*}
+The first three coefficients of \(s^3\mathcal W\) vanish
+exactly, and \(\mathcal W(\eta,0)=\eta(1+\eta)/3\).
+We compute the remaining coefficients from
+\[
+ (1-s)s\mathcal W_s+(3-2s)\mathcal W
+ =(1-s)\frac{QP-\eta^2FJ}{s}+2P^2-(1-\eta-ds^3K)U.
+\]
+At fixed $c,d$, the Taylor coefficients of $\bar u$ are affine
+in $\eta$, and those of $\mathcal W$ are quadratic in $\eta$.
+Separating the powers of \(\eta\) reduces interval overestimation.
+
+Near \(\eta=s=0\) we distinguish \(s\le\eta\) and
+\(\eta\le s\). In the first region we set \(s=\eta x\) and use
+\(0\le\eta\le1/4\), \(0\le x\le1\). Factoring
+\(U=\eta\widetilde U\), \(P=\eta\widetilde P\),
+\(Q=\eta\widetilde Q\), \(\mathcal W=\eta\widetilde{\mathcal W}\)
+leaves analytic fields. We check positivity of \(a/x^2\),
+\((4a-D^2)/x^2\) and
+\(\widetilde Z=\widetilde P^2-\widetilde U\widetilde Q\).
+At \(\eta=0\), let \(q=x^2+4x+6\). Then
+\[
+ g=\frac{2(2x+3)}q,\quad
+ a=\frac{x^2(x+2)(x+6)}{q^2},\quad
+ G=\frac{x(x+4)}{3(x+2)^2},\quad
+ D=\frac{2x(x^2+6x+6)}{3(x+2)q},
+\]
+\[
+ \frac{4a-D^2}{x^2}
+ =\frac{4(8x^4+96x^3+384x^2+648x+396)}{9(x+2)^2q^2}>0.
+\]
+
+In the second region we set \(\eta=s\delta\) and use
+\(0\le s\le1/4\), \(0\le\delta\le1\). We factor
+\(U=s\widehat U\), \(P=s\widehat P\),
+\(Q=s\widehat Q\), \(K=s\widehat K\),
+\(\mathcal W=s\widehat{\mathcal W}\). With
+$\widehat Z=\widehat P^2-\widehat U\widehat Q$ and
+$M_0=1-s\delta-ds^4\widehat K$, one has
+\begin{align*}
+ g&=\delta(F\widehat P-\widehat UJ)/\widehat Z,\\
+ D&=\frac{1}{\widehat Z}\left\{
+ 2\widehat{\mathcal W}
+ +\frac{M_0\widehat U^2}{r\widehat P}
+ +\frac{\widehat U(\delta^2FJ-\widehat Q\widehat P)}{\widehat P}
+ +\frac{s\widehat U\widehat{\mathcal W}}{r\widehat P}
+ -\frac{2s\widehat U\widehat P}{r}\right\}.
+\end{align*}
+Here \(\widehat{\mathcal W}(0,\delta)=(1+4\delta)/12\).
+We can check \(a\) and \(4a-D^2\) directly.
+Away from the corner we use \(1/16\le\eta\le1\) and
+\(0\le s\le1/4\), splitting the interval for \(\eta\) at \(1/4\).
+In both parts we use
+\[
+ \frac Ds=\frac{2\mathcal W}{P^2}
+ -\frac{UP}{Z}\left\{\frac{\mathcal W}{P^2}
+   +\frac{s\mathcal W_s}{P^2}-\frac{2s\mathcal WP_s}{P^3}\right\}.
+\]
+The numerator \(Z^2-\eta^2(FP-UJ)^2\) has a double zero at
+\(s=0\). After factoring it out we check that \(a/s^2\),
+\((4a-D^2)/s^2\) and \(Z\) are positive. These two corner
+charts and the regular region cover the boundary rectangle.
+
+It remains to bound the Taylor errors after the divisions.
+Let \(a_*=1/4\) and define
+\[
+ E_C(M)=\frac{432\,6^{M+1}}
+ {(M+1)!\,[1-6a_* /(M+2)]}.
+\]
+The raw degree-$M$ field tails are at most $E_C(M)s^{M+1}$,
+and their first derivatives at most $2(M+1)E_C(M)s^M$.
+In the chart \(s=\eta x\) we use \(M=48\) and allow the common error
+\[
+ \mathcal E_A=10^{30}E_C(48)a_*^{42}<5.1\times10^{-18}.
+\]
+We bound the fields by \(10^6\) and expand the difference in each
+quadratic or quartic product one factor at a time. After division
+by the exact vanishing factors and the required differentiation,
+this bounds the errors by \(10^{22}E_C(48)a_*^{42}\), which is
+strictly below \(\mathcal E_A\).
+
+For the other boundary charts we use \(M=38\) and
+\[
+ \mathcal E_E=10^{22}E_C(38)a_*^{32}<2.658\times10^{-11}.
+\]
+The recurrence gives \(\mathcal W\) through degree \(M-3\).
+To bound the tail, we majorise the absolute coefficients of
+\(s^3\mathcal W\) by those of
+$P_6(s)e^{6s}+P_{12}(s)e^{12s}$, where
+\begin{align*}
+ P_6(s)={}&9(1+s)^2+45s(1+s)+18s^2+54s^2(1+s)^2,\\
+ P_{12}(s)={}&1296(1+s)^2+7776s(1+s)^2
+       +64800s^4(1+s)^2\\
+       &+57600s^4(1+s)+28800s^5.
+\end{align*}
+These bounds follow from
+$U\preceq18e^{6s}$, $P,Q\preceq36e^{6s}$,
+$L\preceq216e^{6s}$, $F,J\preceq3e^{3s}$,
+and $K\preceq8e^{6s}$, using the displayed numerator for
+$\mathcal W$. Here $\preceq$ denotes coefficientwise domination
+of absolute values. Define
+\[
+ T(z,k)=\frac{z^k}{k!\,[1-z/(k+1)]},\qquad K_*=M+1,
+\]
+and set
+\begin{align*}
+ N_v&=\sum_{q\in\{6,12\}}\sum_j
+        P_{q,j}a_*^jT(qa_*,K_*-j),\\
+ N_d&=\sum_{q\in\{6,12\}}\sum_jP_{q,j}a_*^j
+    \{qa_*T(qa_*,K_*-j-1)+jT(qa_*,K_*-j)\}.
+\end{align*}
+The omitted $\mathcal W$ and derivative terms, including the
+resolved chart divisions, are bounded by
+\[
+ 4N_v/a_*^3+N_d/a_*^4<2.748\times10^{-16}<\mathcal E_E/100.
+\]
+The other raw-field and polynomial errors are bounded by
+$10^{20}E_C(38)a_*^{32}=\mathcal E_E/100$.
+In the two regular charts we remove the double zero from
+\(Z-\eta(FP-UJ)\) before multiplying by \(Z+\eta(FP-UJ)\).
+This lets us perform the cancellation in a quadratic expression.
+The common error bound covers the truncations in both charts,
+labelled E and Esmall in the certificate index.
+
+In the chart \(\eta=s\delta\), labelled B in the certificate
+index, \path{all_contrast_endpoint_B_covered.py} calls
+\texttt{chart\_B} in \path{all_contrast_endpoint.py} with the
+degree-$38$ coefficients from \path{all_contrast_endpoint_fast.py}.
+We enclose \(\widehat U,\widehat P,\widehat Q,F,J,\widehat K\)
+and \(\widehat{\mathcal W}\) separately, checking
+\(\sum_j|p_j|a_*^j<10^6\) for each polynomial, where \(|p_j|\)
+is the upper bound on the absolute coefficient. We widen each
+interval by \(\mathcal E_E\) at both ends. For the first six fields,
+division by at most one power of \(s\) leaves a tail of at most
+$E_C(38)a_*^{38}<6.489\times10^{-37}$. For
+$\widehat{\mathcal W}=\mathcal W/s$, the tail is at most
+$N_v/a_*^4=4N_v/a_*^3<\mathcal E_E/100$.
+From these intervals we form \(\widehat Z\) and check that
+\(\widehat U,\widehat P,F,\widehat Z\) are positive.
+Since \(r\ge3/4\), we can then divide in the formulas for \(g\)
+and \(D\). A rectangle passes when \(a=1-g^2\) and \(4a-D^2\)
+also have positive lower bounds.
+
+The degrees in the table refer to the Bessel series at the centre and
+to the raw fields at the boundary.
+\begin{center}
+\begin{tabular}{lrr}
+\hline
+Chart & Degree & Certified rectangles\\
+\hline
+$0\le r^2\le9/16$, $0\le\eta\le1$ & 30 & 27167\\
+$s=\eta x$, $0\le\eta\le1/4$, $0\le x\le1$ & 48 & 433\\
+$1/4\le\eta\le1$, $0\le s\le1/4$ & 38 & 1574\\
+$1/16\le\eta\le1/4$, $0\le s\le1/4$ & 38 & 773\\
+$\eta=s\delta\le1/16$ in the resolved chart & 38 & 2073\\
+\hline
+\end{tabular}
+\end{center}
+Of the 2073 rectangles in the last row, 94 cross
+\(s\delta=1/16\). On \([s_-,s_+]\times[\delta_-,\delta_+]\) we
+enclose the Robin roots for
+\(s_-\delta_-\le\eta\le\min\{s_+\delta_+,1/16\}\)
+and evaluate the fields on the full \(s\) and \(\delta\) intervals.
+The regular charts cover the part with \(s\delta\ge1/16\) and all
+68 remaining rectangles. All sign tests use directed integer arithmetic.
+The \repofile{certificates/continuation/audit_all_contrast_coverage.py}{coverage calculation}
+uses the rational endpoints of the five partitions to check that
+their union covers \((\eta,r)\in[0,1]^2\), including the common
+edge \(r=3/4\) of the centre and boundary charts.
+
+
+\end{document}

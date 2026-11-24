@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+/proof-check-*/
+/verification-*/
+/figure1-replay.pdf
+*.aux
+*.out
+*.synctex.gz
+*.log

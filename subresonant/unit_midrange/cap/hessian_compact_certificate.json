@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "arithmetic": "fractions.Fraction only",
+  "sqrt_contrast_interval": [
+    "21/10",
+    "459083/200000"
+  ],
+  "contrast_interval": [
+    "441/100",
+    "210757200889/40000000000"
+  ],
+  "parameter_tubes": 808,
+  "minimum_relative_root_margin_lower": "19425687143/200000000000",
+  "maximum_kappa_squared_cone_ratio_upper": "29787947890079/500000000000",
+  "maximum_quotient_squared_cone_ratio_upper": "18735365953/5000000000",
+  "proved_cones": [
+    "-Re(kappa)>|kappa|/8",
+    "-Re(x/kappa)>|x/kappa|/3",
+    "Re((x/kappa)^2)<0"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "arithmetic": "fractions.Fraction only",
+  "J0_squared_argument_6_even_partial": "-23/1024",
+  "J0_squared_argument_30_even_partial": "-2898599/205520896",
+  "J0_squared_argument_31_odd_partial": "555572317511717/34519618525593600",
+  "J1_squared_argument_15_even_partial": "-11/16384",
+  "second_angular_inverse_square_upper": "11/14400",
+  "consequences_using_Bessel_interlacing": [
+    "alpha<6",
+    "30<zeta<31",
+    "third J0 squared zero>36",
+    "alpha*zeta<186<196"
+  ]
+}
